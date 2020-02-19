@@ -9,6 +9,7 @@ Gridify is a simple jQuery plugin that gives the ability to turn any image into 
 <script type="text/javascript">
   $('#map').gridify({
     mapName: 'desert',
+    image: 'images/desert.jpg',
     showGrid: true,
     cols: 32
   });
