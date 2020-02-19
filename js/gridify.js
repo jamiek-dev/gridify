@@ -1,19 +1,15 @@
-/*==============================================================================================================
-	Current Issues:
-	1. 
-==============================================================================================================*/
 (function($) {
 	$.fn.gridify = function(options) {
 		var $el = this,
-			settings = $.extend({
-				mapName: '',
-				image: 'images/desert.jpg',
-				cols: 12,
-				clickable: true,
-				allowPopups: true,
-				pinImg: 'images/pin-sm.png',
-				showGrid: false
-			}, options);
+		settings = $.extend({
+			mapName: '',
+			image: 'images/desert.jpg',
+			cols: 12,
+			clickable: true,
+			allowPopups: true,
+			pinImg: 'images/pin-sm.png',
+			showGrid: false
+		}, options);
 
 		// Update the realtime popup content and flyover blurb content
 		function updateRealtimeNotes(id) {
@@ -53,36 +49,36 @@
 				// Create the grid
 				// ---------------------------------------------------------------------------------------
 				var blockWidth = parseInt(settings.width) / settings.cols,
-					bgSize = settings.width > settings.height ? 'auto ' + parseInt(settings.height) + 'px' : parseInt(settings.width) + 'px auto',
-					totalRows = Math.ceil(settings.height / blockWidth) - 1,
-					totalBlocks = settings.cols * totalRows,
-					letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
-					letterTracker = 0,
-					counter = 1,
-					$wrapper = $('.gridify-inside'),
-					$outer = $('#gridify');
+				bgSize = settings.width > settings.height ? 'auto ' + parseInt(settings.height) + 'px' : parseInt(settings.width) + 'px auto',
+				totalRows = Math.ceil(settings.height / blockWidth) - 1,
+				totalBlocks = settings.cols * totalRows,
+				letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'],
+				letterTracker = 0,
+				counter = 1,
+				$wrapper = $('.gridify-inside'),
+				$outer = $('#gridify');
 
-					/*===================================================================
-						Comment this section
-						it adds additional elements to the letters array. For example,
-						if the number of columns exceeds 26 then we'll have to add a
-						new set of double letter "aa, bb, cc" and so on.
-					===================================================================*/
-					if(Math.floor(settings.cols/26) >= 1) {
-						var total = Math.floor(settings.cols/26),
-							newLetter = '',
-							inc = 1;
-						for(var n=0; n<total; n++) {
-							for(var i=0; i<26; i++) {
-								newLetter = letters[i];
-								for(var j=0; j<counter; j++) {
-									newLetter += letters[i];
-								}
-								letters.push(newLetter);
+				/*===================================================================
+				Comment this section
+				it adds additional elements to the letters array. For example,
+				if the number of columns exceeds 26 then we'll have to add a
+				new set of double letter "aa, bb, cc" and so on.
+				===================================================================*/
+				if(Math.floor(settings.cols/26) >= 1) {
+					var total = Math.floor(settings.cols/26),
+					newLetter = '',
+					inc = 1;
+					for(var n=0; n<total; n++) {
+						for(var i=0; i<26; i++) {
+							newLetter = letters[i];
+							for(var j=0; j<counter; j++) {
+								newLetter += letters[i];
 							}
-							inc++;
+							letters.push(newLetter);
 						}
+						inc++;
 					}
+				}
 
 				// Apply the width and height to the gridify element and its wrapper
 				$outer.css({minWidth: settings.width + blockWidth, minHeight: settings.height + blockWidth});
@@ -92,13 +88,13 @@
 				// Add top column labels
 				$wrapper.prepend('<div class="top-column-labels" style="width:' + settings.width + 'px; height:' + blockWidth + 'px;" />');
 				for(i=1; i<=settings.cols; i++) {
-					$('.top-column-labels').append('<div class="col-' + i + ' block-label" style="' + 
-								'width:' + blockWidth + 'px;' + 
-								'height:' + blockWidth + 'px;' + 
-								'float: left;' + 
-								'text-align: center;' +
-								'line-height: ' + blockWidth + 'px;' +
-								'">' + i + '</div>');
+					$('.top-column-labels').append('<div class="col-' + i + ' block-label" style="' +
+					'width:' + blockWidth + 'px;' +
+					'height:' + blockWidth + 'px;' +
+					'float: left;' +
+					'text-align: center;' +
+					'line-height: ' + blockWidth + 'px;' +
+					'">' + i + '</div>');
 				}
 
 				// Add left row labels
@@ -106,41 +102,41 @@
 				// Add a blank block
 				$('.left-row-labels').append('<div style="' + 'width:' + blockWidth + 'px;' + 'height:' + blockWidth + 'px;' + 'float: left;" />');
 				for(i=0; i<totalRows; i++) {
-					$('.left-row-labels').append('<div class="row-' + letters[i] + ' block-label" style="' + 
-								'width:' + blockWidth + 'px;' + 
-								'height:' + blockWidth + 'px;' + 
-								'float: left;' + 
-								'text-align: center;' +
-								'line-height: ' + blockWidth + 'px;' +
-								'">' + letters[i] + '</div>');
+					$('.left-row-labels').append('<div class="row-' + letters[i] + ' block-label" style="' +
+					'width:' + blockWidth + 'px;' +
+					'height:' + blockWidth + 'px;' +
+					'float: left;' +
+					'text-align: center;' +
+					'line-height: ' + blockWidth + 'px;' +
+					'">' + letters[i] + '</div>');
 				}
 
 				// Create all grid blocks and assign them unique alphanumeric IDs
 				// ID format is a1, b1, c1, a2, b2, c2...
 				for(i=1; i<=totalBlocks; i++) {
 					var gridId = letters[letterTracker] + counter,
-						tagType = settings.clickable ? 'a' : 'div';
+					tagType = settings.clickable ? 'a' : 'div';
 
-					$el.append('<' + tagType + ' href="#' + gridId + '-popup" id="' + gridId + '" class="grid-block fancybox col-' + parseInt(gridId.match(/\d+/, '')) + ' row-' + letters[letterTracker] + '" style="' + 
-								'width:' + blockWidth + 'px;' + 
-								'height:' + blockWidth + 'px;' + 
-								'float: left;' + 
-								'background: url(' + settings.image + ') no-repeat left top / ' + bgSize + ';' + 
-								'" />');
+					$el.append('<' + tagType + ' href="#' + gridId + '-popup" id="' + gridId + '" class="grid-block fancybox col-' + parseInt(gridId.match(/\d+/, '')) + ' row-' + letters[letterTracker] + '" style="' +
+					'width:' + blockWidth + 'px;' +
+					'height:' + blockWidth + 'px;' +
+					'float: left;' +
+					'background: url(' + settings.image + ') no-repeat left top / ' + bgSize + ';' +
+					'" />');
 
 					// Add an interface that the user can interact with to add data
 					// to pin point areas. This is added to each new block that's
 					// created directly above
 					if(settings.clickable && settings.allowPopups) {
-						$('#' + gridId).append('<div class="hide">' + 
-												'<div id="' + gridId + '-popup">' +  
-												'<form class="gridify-interface">' + 
-												'<p>Block ID: ' + gridId + '</p>' + 
-												'<p><textarea name="blockNoes" class="block-notes"></textarea></p>' + 
-												'<p data-parentId="' + gridId + '" class="close-btn">Close</p>' + 
-												'<p data-parentId="' + gridId + '" class="remove-pin">Remove Pin</p>' + 
-												'<input type="submit" name="' + gridId + 'saveData" class="save-data" value="Save Data" data-parentId="' + gridId + '" /></p></form></div>' +
-												'</div>');
+						$('#' + gridId).append('<div class="hide">' +
+						'<div id="' + gridId + '-popup">' +
+						'<form class="gridify-interface">' +
+						'<p>Block ID: ' + gridId + '</p>' +
+						'<p><textarea name="blockNoes" class="block-notes"></textarea></p>' +
+						'<p data-parentId="' + gridId + '" class="close-btn">Close</p>' +
+						'<p data-parentId="' + gridId + '" class="remove-pin">Remove Pin</p>' +
+						'<input type="submit" name="' + gridId + 'saveData" class="save-data" value="Save Data" data-parentId="' + gridId + '" /></p></form></div>' +
+						'</div>');
 					}
 
 					// Each time a new row is started reset the counter and move on
@@ -156,12 +152,12 @@
 				// Add hover effect to entire row/column when hovered
 				$('.grid-block').hover(function() {
 					var col = '.' + $(this).attr('class').match(/col-\d+/).toString(),
-						row = '.' + $(this).attr('class').match(/row-\w+/).toString();
+					row = '.' + $(this).attr('class').match(/row-\w+/).toString();
 					$(col + ',' + row).addClass('block-active');
 					$(this).removeClass('block-active');
 				}, function() {
 					var col = '.' + $(this).attr('class').match(/col-\d+/).toString(),
-						row = '.' + $(this).attr('class').match(/row-\w+/).toString();
+					row = '.' + $(this).attr('class').match(/row-\w+/).toString();
 					$(col + ',' + row).removeClass('block-active');
 				});
 
@@ -169,11 +165,11 @@
 				// appears as 1 large image
 				$el.children('.grid-block').each(function() {
 					var block = $(this),
-						leftPos = block.position().left,
-						topPos = block.position().top;
+					leftPos = block.position().left,
+					topPos = block.position().top;
 					block.css('background-position', '-' + leftPos + 'px -' + topPos + 'px');
 				});
-				
+
 				// If clickable is true then allow the placement of pins on the map along
 				// with custom block specific data
 				if(settings.clickable) {
@@ -186,12 +182,12 @@
 							// Check and make sure a pin hasn't already been added
 							if(!block.children().is('.pin-container')) {
 								var pinLeft = blockWidth / 2 - pin.width / 2,
-									pinTop = blockWidth / 2 - pin.height / 2;
-								block.append('<div class="pin-container"><img src="' + settings.pinImg + '" alt="Pin" style="' + 
-									'position:absolute;' + 
-									'left:' + pinLeft + 'px;' +
-									'bottom: 40%' +
-									'" /></div>');
+								pinTop = blockWidth / 2 - pin.height / 2;
+								block.append('<div class="pin-container"><img src="' + settings.pinImg + '" alt="Pin" style="' +
+								'position:absolute;' +
+								'left:' + pinLeft + 'px;' +
+								'bottom: 40%' +
+								'" /></div>');
 
 								// If popups are allowd then add a blurb section
 								if(settings.allowPopups) {
@@ -209,12 +205,12 @@
 
 								// Add pin to the current block
 								var pinLeft = blockWidth / 2 - pin.width / 2,
-									pinTop = blockWidth / 2 - pin.height / 2;
-								block.append('<div class="pin-container"><img src="' + settings.pinImg + '" alt="Pin" style="' + 
-									'position:absolute;' + 
-									'left:' + pinLeft + 'px;' +
-									'bottom: 40%' +
-									'" /></div>');
+								pinTop = blockWidth / 2 - pin.height / 2;
+								block.append('<div class="pin-container"><img src="' + settings.pinImg + '" alt="Pin" style="' +
+								'position:absolute;' +
+								'left:' + pinLeft + 'px;' +
+								'bottom: 40%' +
+								'" /></div>');
 
 								// If popups are allowd then add a blurb section
 								if(settings.allowPopups) {
@@ -234,7 +230,7 @@
 							$('.save-data').on('click', function(e) {
 								e.preventDefault();
 								var id = $(this).attr('data-parentId'),
-									notes = $('#' + id + '-popup .block-notes').val();
+								notes = $('#' + id + '-popup .block-notes').val();
 								$.ajax({
 									url: 'includes/set-map-data.php?mapName=' + settings.mapName + '&id=' + id + '&notes=' + notes
 								}).done(function() {
